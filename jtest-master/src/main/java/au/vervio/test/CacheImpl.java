@@ -2,13 +2,15 @@ package au.vervio.test;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CacheImpl<val> implements Cache{
     Map<Object,Object> cacheMap = new HashMap<Object,Object>();
 
     public Object get(Object key) {
-      return  cacheMap.entrySet().stream().filter(item -> item.getKey().equals(key)).map(cacheMap::getValue).orElse(null);
+
+      return  cacheMap.entrySet().stream().filter(item -> item.getKey().equals(key)).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
    }
     public Object put(Object key, Object value) {
         if(key == null || value == null ) {
